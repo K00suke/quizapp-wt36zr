@@ -1,9 +1,10 @@
 <script>
     import AnswerButton from "./AnswerButton.svelte";
+    import {getQuizData} from "./quizdataFactory.js";
     
     let currentScore = 0;
     let renzokuSeikai = 0;
-    let quizData = {question: "この問題の正解はどれでしょう？", correctAnswer : ["O₂", "13.8"], taku: ["ア","O₂","①","doing","13.8"]};
+    let quizData = {question: "この問題の正解はどれでしょう？", correctAnswer : "13.8", taku: ["ア","O₂","①","doing","13.8"]};
 
 
     const answerButtonClicked = (isCorrect) => {
@@ -14,6 +15,7 @@
         else{
             renzokuSeikai = 0;
         }
+        quizData = getQuizData();
     }
 </script>
 <main class="flex flex-col h-dvh">
@@ -29,7 +31,7 @@
     <!-- 選択肢 -->
     <div class="bg-blue-200 flex flex-col justify-around flex-grow items-center">
         {#each quizData.taku as t}
-            <AnswerButton on:click={() => answerButtonClicked(quizData.correctAnswer.includes(t))}>{t}</AnswerButton>
+            <AnswerButton on:click={() => answerButtonClicked(quizData.correctAnswer == t)}>{t}</AnswerButton>
         {/each}
     </div>
 </main>
